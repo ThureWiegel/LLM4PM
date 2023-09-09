@@ -1,10 +1,13 @@
 from aspose.email import MailMessage
 import os
 import cleantext
+from NameFilter import namefiltering
 
 unprocessedDir = "unprocessed/"
 processedDir = "processed/"
 count = 0
+
+bad_words = ['China', 'Mobile', 'Tel', 'Samsung']
 
 # Create MailMessage instance by loading an email .eml file
 for file in os.listdir(unprocessedDir):
@@ -29,6 +32,8 @@ for file in os.listdir(unprocessedDir):
     content = cleantext.replace_emails(str(content), replace_with="")
     content = cleantext.replace_urls(str(content), replace_with="")
 
+    content = namefiltering(content)
+
     # opens a new temporary FULL file and writes content to it
     f = open("FULL"+substring+str(count), "w", encoding='utf-8')
     f.write(content)
@@ -38,7 +43,12 @@ for file in os.listdir(unprocessedDir):
     # writing emails adds unessecary \n, fixed by iterating over FULL file and writing every second line to final file
     with open("FULL"+substring+str(count), "r", encoding='utf-8') as in_file, open(processedDir+substring+str(count), "w", encoding='utf-8') as out_file:
         for index, line in enumerate(in_file):
+
             if (index + 1) % 2:
-                out_file.write(line)
-    # deletes temp FULL file
+                if not any(bad_word in line for bad_word in bad_words):
+                    out_file.write(line)
+
+    # delete temporary FULL file
     os.remove("FULL"+substring+str(count))
+
+    
