@@ -28,4 +28,9 @@ def namefiltering(content):
     content = content.replace("Absoilcs", "ExampleCompany2")
     content = content.replace("Abolics", "ExampleCompany2")
 
+    content = content.replace("Von", "From")
+    content = content.replace("An", "To")
+    content = content.replace("Cc", "To")
+    content = content.replace("Betreff", "Subject")
+
     return content
