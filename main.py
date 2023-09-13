@@ -7,7 +7,7 @@ unprocessedDir = "unprocessed/"
 processedDir = "processed/"
 count = 0
 
-bad_words = ['China', 'Mobile', 'Tel', 'Samsung', 'Mob.', 'mobile']
+bad_words = ['China', 'Mobile:', 'Tel', 'Samsung', 'Mob.', 'mobile', "Phone ", "phone", "Tel.", "tel.", "Fax", "fax", "Mobile", "Mainz"]
 
 # Create MailMessage instance by loading an email .eml file
 for file in os.listdir(unprocessedDir):
@@ -49,6 +49,16 @@ for file in os.listdir(unprocessedDir):
         f = open(processedDir + substring + str(index), "w", encoding='utf-8')
         f.write(part)
         f.close()
+
+test = os.listdir(processedDir)
+for i in test:
+    if i.endswith("0"):
+        os.remove(os.path.join(processedDir, i))
+
+
+
+
+
 
 
 
