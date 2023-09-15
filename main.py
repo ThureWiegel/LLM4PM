@@ -51,9 +51,16 @@ for file in os.listdir(unprocessedDir):
         f.close()
 
 test = os.listdir(processedDir)
-for i in test:
-    if i.endswith("0"):
-        os.remove(os.path.join(processedDir, i))
+for f in test:
+            fullname = os.path.join(processedDir, f)
+            try:
+                if os.path.getsize(fullname) == 0:
+                    os.remove(fullname)
+            except WindowsError:
+                continue
+# for i in test:
+#     if i.endswith("0"):
+#         os.remove(os.path.join(processedDir, i))
 
 
 
