@@ -26,7 +26,7 @@ for file in os.listdir(unprocessedDir):
     content += str(message.body)
 
     # cuts down file name
-    substring = file[0:6]
+    substring = file[0:8]
 
     # text normalization/cleaning. removes email-addresses and urls (images, company websites, etc.) from email body
     content = cleantext.replace_emails(str(content), replace_with="")
@@ -45,7 +45,7 @@ for file in os.listdir(unprocessedDir):
     # split content at "From: " and "Von: " and store each part in a new file
     # name the files with the substring and a number
     content = content.split('From:')
-    for index, part in enumerate(content):
+    for index, part in enumerate(reversed(content)):
         f = open(processedDir + substring + str(index), "w", encoding='utf-8')
         f.write(part)
         f.close()
@@ -58,9 +58,6 @@ for f in test:
                     os.remove(fullname)
             except WindowsError:
                 continue
-# for i in test:
-#     if i.endswith("0"):
-#         os.remove(os.path.join(processedDir, i))
 
 
 
